@@ -16,3 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::prefix('admin')
+// ->middleware(['auth','admin'])
+->group(function () {
+    Route::get('dashboard','Admin\DashboardController@index')->name('admin.dashboard.index');
+
+    // CRUD CUSTOMER
+    Route::get('customer', 'Admin\CustomerController@index')->name('admin.customer.index');
+    Route::post('customer/create', 'Admin\CustomerController@store')->name('admin.customer.store');
+    Route::post('customer/update/{id}', 'Admin\CustomerController@update')->name('admin.customer.update');
+    Route::get('customer/delete/{id}', 'Admin\CustomerController@delete')->name('admin.customer.delete');
+
+
+});
