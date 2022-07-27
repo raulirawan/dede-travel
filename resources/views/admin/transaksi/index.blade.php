@@ -35,10 +35,10 @@
                                 <div class="col-md-3">
                                     <select name="status_transaksi" id="status_transaksi" class="form-control">
                                         <option value="SEMUA">SEMUA</option>
-                                        <option value="DITERIMA">DITERIMA</option>
-                                        <option value="DELIVERED">DELIVERED</option>
-                                        <option value="SUCCESS">SUCCESS</option>
                                         <option value="PENDING">PENDING</option>
+                                        <option value="SELESAI">SELESAI</option>
+                                        <option value="ON PROGRESS">ON PROGRESS</option>
+                                        <option value="SUDAH BAYAR">SUDAH BAYAR</option>
                                         <option value="CANCELLED">CANCELLED</option>
                                     </select>
                                 </div>

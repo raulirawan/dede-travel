@@ -16,11 +16,13 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->roles == 'ADMIN') {
+        if (Auth::user()->roles == 'ADMIN') {
 
             return $next($request);
+        } else if (Auth::user()->roles == 'TOURGUIDE') {
+            return redirect('/tour-guide/dashboard');
+        } else {
+            return redirect('/');
         }
-
-        return redirect('/tour-guide/dashboard');
     }
 }
