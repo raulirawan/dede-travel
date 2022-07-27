@@ -8,7 +8,7 @@ class Transaksi extends Model
 {
     protected $table = 'transaksi';
 
-    public function review_id()
+    public function review()
     {
         return $this->hasOne(Review::class,'id','review_id');
     }

@@ -214,7 +214,7 @@
                                       id="review-btn"
                                       data-bs-toggle="modal"
                                       data-bs-target="#review"
-                                      data-review="{{ $item->review }}"
+                                      data-review="{{ $item->review->review ?? '' }}"
                                       class="btn btn-primary btn-sm" >Review</button>
                                   </td>
                               </tr>
