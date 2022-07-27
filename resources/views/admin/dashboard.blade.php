@@ -28,27 +28,18 @@
 
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
 
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Today</span></h5>
+                  <h5 class="card-title">Customer <span>| Bulan Ini</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
+                      <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6>{{ App\User::where('roles','CUSTOMER')->count() }}</h6>
 
                     </div>
                   </div>
@@ -63,27 +54,18 @@
 
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
 
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                  <h5 class="card-title">Penghasilan <span>| Bulan Ini</span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6>Rp{{ number_format(App\Transaksi::whereIn('status',['SELESAI','SUDAH BAYAR'])->sum('total_harga')) }}</h6>
 
                     </div>
                   </div>
@@ -99,27 +81,18 @@
 
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
 
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Customers <span>| This Year</span></h5>
+                  <h5 class="card-title">Paket Travel<span></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                      <h6>{{ App\Travel::count() }}</h6>
 
                     </div>
                   </div>
@@ -132,80 +105,60 @@
             <!-- Reports -->
             <div class="col-12">
               <div class="card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Today</span></h5>
+                  <h5 class="card-title">Data Pekerjaan Tour Guide</h5>
 
-                  <!-- Line Chart -->
-                  <div id="reportsChart"></div>
 
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Line Chart -->
+                  <table class="table datatable">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="no">No</th>
+                            <th scope="col">Nama Customer</th>
+                            <th scope="col">Tour Guide</th>
+                            <th scope="col">Paket Travel</th>
+                            <th scope="col">Waktu</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="aksi">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($transaksi as $item)
+                            <tr>
+                                <th scope="row">{{ $loop->iteration }}</th>
+                                <td>{{ $item->user->name }}</td>
+                                <td>{{ $item->tourGuide->name ?? 'Belum Ada' }}</td>
+                                <td>{{ $item->travel->paketTravel->nama_paket }}</td>
+                                <td>{{ $item->travel->waktu }} Hari</td>
+                                <td>
+                                    @if ($item->status == 'SUDAH BAYAR')
+                                    <span class="badge bg-success">SUDAH BAYAR</span>
+                                    @elseif($item->status == 'PENDING')
+                                    <span class="badge bg-warning">PENDING</span>
+                                    @elseif($item->status == 'SELESAI')
+                                    <span class="badge bg-success">SELESAI</span>
+                                    @elseif($item->status == 'ON PROGRESS')
+                                    <span class="badge bg-warning">ON PROGRESS</span>
+                                    @else
+                                    <span class="badge bg-danger">CANCELLED</span>
+                                    @endif
+                                </td>
+                               @if ($item->status == 'SUDAH BAYAR')
+                                <td>
+                                    <button
+                                    id="select-tour"
+                                    data-id="{{ $item->id }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal-pilih-tour-guide"
+                                    class="btn btn-primary btn-sm"
+                                    >Pilih Tour Guide</button>
+                                </td>
+                               @endif
+                            </tr>
+                        @endforeach
 
+
+                    </tbody>
+                </table>
                 </div>
 
               </div>
@@ -213,7 +166,67 @@
 
 
 
+            <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Data Pekerjaan Selesai Tour Guide</h5>
 
+
+                    <table class="table datatable">
+                      <thead>
+                          <tr>
+                                <th scope="col" class="no">No</th>
+                                <th scope="col">Nama Customer</th>
+                                <th scope="col">Paket Travel</th>
+                                <th scope="col">Bukti Perjalanan</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="aksi">Aksi</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach (App\Transaksi::where('status','SELESAI')->get() as $item)
+                              <tr>
+                                  <th scope="row">{{ $loop->iteration }}</th>
+                                  <td>{{ $item->user->name }}</td>
+                                  <td>{{ $item->travel->paketTravel->nama_paket }}</td>
+                                  <td>
+                                    @if($item->bukti_perjalanan != null)
+                                    <img src="{{ asset($item->bukti_perjalanan) }}" style="width: 100px">
+                                    @else
+                                    <span>Tidak Ada</span>
+                                    @endif
+                                  </td>
+                                  <td>
+                                    @if ($item->status == 'SUDAH BAYAR')
+                                    <span class="badge bg-success">SUDAH BAYAR</span>
+                                    @elseif($item->status == 'PENDING')
+                                    <span class="badge bg-warning">PENDING</span>
+                                    @elseif($item->status == 'SELESAI')
+                                    <span class="badge bg-success">SELESAI</span>
+                                    @elseif($item->status == 'ON PROGRESS')
+                                    <span class="badge bg-warning">ON PROGRESS</span>
+                                    @else
+                                    <span class="badge bg-danger">CANCELLED</span>
+                                    @endif
+                                </td>
+                                  <td>
+                                      <button
+                                      id="review-btn"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#review"
+                                      data-review="{{ $item->review }}"
+                                      class="btn btn-primary btn-sm" >Review</button>
+                                  </td>
+                              </tr>
+                          @endforeach
+
+
+                      </tbody>
+                  </table>
+                  </div>
+
+                </div>
+              </div><!-- End Reports -->
 
           </div>
         </div><!-- End Left side columns -->
@@ -223,4 +236,85 @@
     </section>
 
   </main><!-- End #main -->
+
+  <div class="modal fade" id="modal-pilih-tour-guide" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pilih Tour Guide</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="form-pilih-tour-guide" action="#" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card-body">
+                        <div class="form-group mb-2">
+                            <label class="form-label">Data Tour Guide</label>
+                            <select name="tour_guide_id" id="tour_guide_id" class="form-control" required>
+                                <option value="">Pilih Tour Guide</option>
+                                @foreach (App\User::where('roles','TOURGUIDE')->get() as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary btn-sm">Simpan Data</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="review" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="form-pilih-tour-guide" action="#" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card-body">
+                        <div class="form-group mb-2">
+                            <label class="form-label">Review</label>
+                            <textarea name="review" id="review-text" rows="5" class="form-control" readonly></textarea>
+                        </div>
+                    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
 @endsection
+
+@push('down-script')
+
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '#select-tour', function() {
+            var id = $(this).data('id');
+            $('#form-pilih-tour-guide').attr('action', '/admin/dashboard/pilih/tour-guide/' + id);
+        });
+
+        $(document).on('click', '#review-btn', function() {
+            var review = $(this).data('review');
+            if(review.length > 0) {
+                $("#review-text").val(review);
+            }else {
+                $("#review-text").val('Tidak Ada Review');
+            }
+            $('#form-pilih-tour-guide').attr('action', '/admin/dashboard/pilih/tour-guide/' + id);
+        });
+    });
+</script>
+@endpush

@@ -27,4 +27,9 @@ class Transaksi extends Model
     {
         return $this->belongsTo(User::class,'tour_guide_id','id');
     }
+
+    public function tiket()
+    {
+        return $this->hasMany(Tiket::class,'transaksi_id','id');
+    }
 }

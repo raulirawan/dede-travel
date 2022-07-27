@@ -10,7 +10,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard.index') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Data Customer</li>
+                    <li class="breadcrumb-item active">Data Tour Guide</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -21,16 +21,16 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Tabel Customer</h5>
+                            <h5 class="card-title">Tabel Tour Guide</h5>
                             <button class="btn btn-success btn-sm mt-1 mb-3" data-bs-toggle="modal"
-                                data-bs-target="#modal-create">(+) Tambah Customer</button>
+                                data-bs-target="#modal-create">(+) Tambah Tour Guide</button>
 
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Nama Customer</th>
+                                        <th scope="col">Nama Tour Guide</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Nomor Handphone</th>
                                         <th scope="col">Aksi</th>
@@ -50,11 +50,11 @@
                                                 data-bs-target="#modal-edit"
                                                 class="btn btn-info btn-sm"
                                                 data-id="{{ $item->id }}"
-                                                data-nama_customer="{{ $item->name }}"
+                                                data-name="{{ $item->name }}"
                                                 data-email="{{ $item->email }}"
                                                 data-nomor_handphone="{{ $item->nomor_handphone }}"
                                                 >Edit</button>
-                                                <a href="{{ route('admin.customer.delete', $item->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ?')">Hapus</a>
+                                                <a href="{{ route('admin.tour-guide.delete', $item->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ?')">Hapus</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -76,17 +76,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Form Tambah Customer</h5>
+                    <h5 class="modal-title">Form Tambah Tour Guide</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ route('admin.customer.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('admin.tour-guide.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="form-label">Nama Customer</label>
-                                <input type="text" class="form-control" value="{{ old('nama_customer') }}"
-                                    name="nama_customer" placeholder="Masukan Nama" required>
+                                <label class="form-label">Nama Tour Guide</label>
+                                <input type="text" class="form-control" value="{{ old('nama_tour_guide') }}"
+                                    name="nama_tour_guide" placeholder="Masukan Nama" required>
                             </div>
                             <div class="form-group mb-2">
                                 <label class="form-label">Email</label>
@@ -109,7 +109,7 @@
 
                         </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs- dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
                     <button type="submit" class="btn btn-primary btn-sm">Simpan Data</button>
                 </div>
                 </form>
@@ -124,7 +124,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Form Edit Customer</h5>
+                    <h5 class="modal-title">Form Edit Tour Guide</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -132,9 +132,9 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="form-label">Nama Customer</label>
-                                <input type="text" class="form-control" id="nama_customer" value="{{ old('nama_customer') }}"
-                                    name="nama_customer" placeholder="Masukan Nama" required>
+                                <label class="form-label">Nama Tour Guide</label>
+                                <input type="text" class="form-control" id="nama_tour_guide" value="{{ old('nama_tour_guide') }}"
+                                    name="nama_tour_guide" placeholder="Masukan Nama" required>
                             </div>
                             <div class="form-group mb-2">
                                 <label class="form-label">Email</label>
@@ -185,13 +185,13 @@
     $(document).ready(function() {
         $(document).on('click', '#edit', function() {
             var id = $(this).data('id');
-            var nama_customer = $(this).data('nama_customer');
+            var nama_tour_guide = $(this).data('name');
             var email = $(this).data('email');
             var nomor_handphone = $(this).data('nomor_handphone');
-            $('#nama_customer').val(nama_customer);
+            $('#nama_tour_guide').val(nama_tour_guide);
             $('#email_edit').val(email);
             $('#nomor_handphone').val(nomor_handphone);
-            $('#form-edit').attr('action', '/admin/customer/update/' + id);
+            $('#form-edit').attr('action', '/admin/tour-guide/update/' + id);
         });
     });
 </script>
