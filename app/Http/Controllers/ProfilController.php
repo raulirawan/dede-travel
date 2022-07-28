@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use PDF;
 class ProfilController extends Controller
 {
     public function index()
@@ -56,5 +56,12 @@ class ProfilController extends Controller
             $user->save();
             Alert::success('Password Anda Berhasil di Ganti');
             return redirect()->route('profile.index');
+    }
+
+    public function tes()
+    {
+        $pdf = Pdf::loadView('tiket');
+        $pdf->setPaper('a7', 'potrait')->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+        return $pdf->download('tes.pdf');
     }
 }

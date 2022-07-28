@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/paket-travel/{paket_travel_id}', 'PaketTravelController@index')->name('paket.travel.index');
 
+Route::get('/tes','ProfilController@tes');
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', 'ProfilController@index')->name('profile.index');
     Route::post('/profile', 'ProfilController@update')->name('profile.update');
@@ -26,6 +28,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaksi/detail/{transaksi_id}', 'TransaksiController@detail')->name('transaksi.detail');
 
     Route::post('/add/review/{transaksi_id}', 'TransaksiController@addReview')->name('transaksi.add.review');
+
+    Route::get('/paket-travel/form/pemesanan/{travel_id}', 'PaketTravelController@formTravel')->name('form.pemesanan.travel.index');
+
 
 });
 

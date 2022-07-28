@@ -70,7 +70,7 @@
                         <img src="{{ asset($item->gambar) }}" alt="">
                     </div>
                     <div class="content">
-                        <p class="d-flex align-items-center">{{ $item->nama_paket }} <a href="travel_destination.html">  {{ $item->travel->count() }} Paket</a> </p>
+                        <p class="d-flex align-items-center">{{ $item->nama_paket }} <a href="{{ route('paket.travel.index', $item->id) }}">  {{ $item->travel->count() }} Paket</a> </p>
 
                     </div>
                 </div>
