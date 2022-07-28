@@ -123,6 +123,7 @@ Copyright &copy; <script>document.write(new Date().getFullYear());</script> All 
         });
     </script>
     @include('sweetalert::alert')
+    @stack('down-script')
 </body>
 
 </html>
