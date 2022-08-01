@@ -1,6 +1,7 @@
 @extends('layouts.frontend')
 
 @section('content')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- bradcam_area  -->
     <div class="bradcam_area bradcam_bg_2">
         <div class="container">
@@ -22,8 +23,7 @@
                     <h2>Form Pemesanan {{ $travel->paketTravel->nama_paket }}</h2>
                     <div class="card">
                         <div class="card-body">
-                            <form action="#" method="POST" enctype="multipart/form-data">
-                                @csrf
+                            <form>
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="c_fname" class="text-black">Tanggal Berangkat</label>
@@ -44,10 +44,12 @@
                                         <label for="c_fname" class="text-black">Harga</label>
                                         <input type="text" class="form-control"
                                             value="{{ number_format($travel->harga) }} / Orang" disabled>
+                                        <input type="hidden" id="harga" value="{{ $travel->harga }}">
+                                        <input type="hidden" id="travel_id" value="{{ $travel->id }}">
                                     </div>
                                 </div>
 
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="data_peserta">
                                     <thead>
                                         <tr>
                                             <th>Nama Peserta</th>
@@ -63,8 +65,14 @@
                                     <a class="btn btn-info btn-sm text-white" data-toggle="modal"
                                         data-target="#tambah-peserta">Tambah Peserta</a>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-sm btn-block mt-4">Buat Pesanan
-                                    Tiket</button>
+                                <div class="mt-4">
+                                    <h3>Total Harga</h3>
+                                    <h3>Rp<span id="total_harga">0</span></h3>
+                                </div>
+                                <button id="buat-pesanan-tiket" class="btn btn-primary btn-sm btn-block mt-4">
+                                    <span id="text-button">Buat Transaksi Tiket</span>
+                                    <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -159,6 +167,12 @@
                 $('#peserta_body').append(tr);
                 $("#nama_peserta").val('');
                 $("#nomor_handphone").val('');
+
+                var init_total_harga = parseInt($("#total_harga").text());
+                var harga = parseInt($("#harga").val());
+
+                var total_harga = init_total_harga + harga;
+                $("#total_harga").text(total_harga);
             });
             var trEdit = null;
             $(document).on('click', '.btn-edit', function() {
@@ -193,6 +207,55 @@
             $(document).on('click', '.btn-delete', function() {
                 if(confirm("Yakin Ingin Di Hapus ?")) {
                     $(this).closest('#tr').remove();
+                    var init_total_harga = parseInt($("#total_harga").text());
+                    var harga = parseInt($("#harga").val());
+
+                    var total_harga = init_total_harga - harga;
+                    $("#total_harga").text(total_harga);
+                }
+            });
+
+            $(document).on('click', '#buat-pesanan-tiket', function() {
+                if(confirm("Yakin Buat Pesanan")) {
+                    var data_peserta = $("tbody tr", $("#data_peserta")).map(function() {
+                        return [$("td", this).map(function() {
+                            return this.innerHTML;
+                        }).get()];
+                    }).get();
+                    var travel_id = $("#travel_id").val();
+                    var total_harga = parseInt($("#total_harga").text());
+
+
+                    if(data_peserta == '' ){
+                        alert('Peserta Tidak Boleh Kosong!');
+                        return false;
+                    }
+                    $("#text-button").addClass('d-none');
+                    $("#buat-pesanan-tiket").prop('disabled', true);
+                    $("#spinner").removeClass('d-none');
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('travel.pesan') }}",
+                        data: {
+                            travel_id: travel_id,
+                            total_harga: total_harga,
+                            data_peserta: data_peserta,
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                        },
+
+                        success: function (response) {
+                            if (response.status == 'success') {
+                                alert(response.message);
+                                window.location.replace(response.url);
+                            } else {
+                                alert(response.message);
+                                window.location.replace(response.url);
+                            }
+                            $("#text-button").removeClass('d-none');
+                            $("#buat-pesanan-tiket").prop('disabled', false);
+                            $("#spinner").addClass('d-none');
+                        }
+                    });
                 }
             });
         </script>

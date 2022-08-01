@@ -54,6 +54,10 @@
                                         <td>{{ $transaksi->user->name }}</td>
                                     </tr>
                                     <tr>
+                                        <th style="width: 400px">Email Customer</th>
+                                        <td>{{ $transaksi->user->email }}</td>
+                                    </tr>
+                                    <tr>
                                         <th style="width: 400px">Nama Tour Guide</th>
                                         <td>{{ $transaksi->tourGuide->name ?? 'Belum Ada' }}</td>
                                     </tr>
@@ -94,7 +98,7 @@
                                 </tbody>
                               </table>
                         </div>
-                        <a href="#" class="btn btn-primary btm-sm mb-3">Download Tiket</a>
+                        <a href="{{ route('download.tiket', $transaksi->id) }}" class="btn btn-primary btm-sm mb-3">Download Tiket</a>
 
                     </div>
                 </div>

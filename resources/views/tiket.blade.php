@@ -32,46 +32,19 @@
 </style>
 
 <body>
+    @foreach (json_decode($transaction->peserta_temp) as $item)
     <div class="content" style="text-align: center">
         <h1>TIKET</h1>
         <div class="nama-peserta">
-            RAUL IRAWAN
+            {{ $item->nama_peserta }}
         </div>
-        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('dwadwwaaw')) !!}"><br>
+        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate($item->kode_tiket)) !!}"><br>
         <div class="kode-tiket">
-            DWKAKWEKRK
+            {{ $item->kode_tiket }}
         </div>
     </div>
-    <div class="content" style="text-align: center">
-        <h1>TIKET</h1>
-        <div class="nama-peserta">
-            RAUL IRAWAN
-        </div>
-        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('dwadwwaaw')) !!}"><br>
-        <div class="kode-tiket">
-            DWKAKWEKRK
-        </div>
-    </div>
-    <div class="content" style="text-align: center">
-        <h1>TIKET</h1>
-        <div class="nama-peserta">
-            RAUL IRAWAN
-        </div>
-        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('dwadwwaaw')) !!}"><br>
-        <div class="kode-tiket">
-            DWKAKWEKRK
-        </div>
-    </div>
-    <div class="content" style="text-align: center">
-        <h1>TIKET</h1>
-        <div class="nama-peserta">
-            RAUL IRAWAN
-        </div>
-        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('dwadwwaaw')) !!}"><br>
-        <div class="kode-tiket">
-            DWKAKWEKRK
-        </div>
-    </div>
+    @endforeach
+
 
 </body>
 

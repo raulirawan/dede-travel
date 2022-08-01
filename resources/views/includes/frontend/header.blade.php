@@ -15,8 +15,8 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="index.html">home</a></li>
-                                        <li><a class="" href="travel_destination.html">Paket Travel</a></li>
+                                        <li><a class="active" href="{{ url('/') }}">home</a></li>
+                                        <li><a class="" href="{{ url('/paket-travel') }}">Paket Travel</a></li>
                                         @auth
                                             <li><a href="#">Halo, {{ Auth::user()->name }}<i
                                                         class="ti-angle-down"></i></a>

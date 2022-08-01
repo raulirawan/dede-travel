@@ -7,11 +7,15 @@ use App\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use PDF;
 
 class TransaksiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if($request->transaction_status == 'settlement') {
+            Alert::success('Success','Pembayaran Berhasil '.$request->order_id ?? '');
+        }
         return view('pages.transaksi');
     }
 
@@ -40,5 +44,13 @@ class TransaksiController extends Controller
             Alert::error('Gagal Tambah Review Coba Lagi!');
             return redirect()->route('transaksi.index');
         }
+    }
+
+    public function downloadTiket($id)
+    {
+        $transaction = Transaksi::findOrFail($id);
+        $pdf = Pdf::loadView('tiket', compact('transaction'));
+        $pdf->setPaper('a7', 'potrait')->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+        return $pdf->download('tiket.pdf');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transaksi;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,7 +61,8 @@ class ProfilController extends Controller
 
     public function tes()
     {
-        $pdf = Pdf::loadView('tiket');
+        $transaksi = Transaksi::findOrFail(4);
+        $pdf = Pdf::loadView('tiket', compact('transaksi'));
         $pdf->setPaper('a7', 'potrait')->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
         return $pdf->download('tes.pdf');
     }

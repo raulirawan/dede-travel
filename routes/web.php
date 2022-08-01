@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/paket-travel', function () {
+    return view('paket-travel');
+});
 Route::get('/paket-travel/{paket_travel_id}', 'PaketTravelController@index')->name('paket.travel.index');
 
 Route::get('/tes','ProfilController@tes');
@@ -30,6 +33,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add/review/{transaksi_id}', 'TransaksiController@addReview')->name('transaksi.add.review');
 
     Route::get('/paket-travel/form/pemesanan/{travel_id}', 'PaketTravelController@formTravel')->name('form.pemesanan.travel.index');
+
+    Route::post('/pesan/travel', 'PaketTravelController@pesan')->name('travel.pesan');
+    Route::get('/download/tiket/{transaksi_id}', 'TransaksiController@downloadTiket')->name('download.tiket');
 
 
 });
@@ -85,3 +91,4 @@ Route::prefix('tour-guide')
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/midtrans/callback', 'MidtransController@callback')->name('midtrans.callback');

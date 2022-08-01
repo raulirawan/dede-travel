@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Customer <span>| Bulan Ini</span></h5>
+                  <h5 class="card-title">Customer <span></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -65,8 +65,7 @@
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>Rp{{ number_format(App\Transaksi::whereIn('status',['SELESAI','SUDAH BAYAR'])->sum('total_harga')) }}</h6>
-
+                      <h6>Rp{{ number_format(App\Transaksi::whereIn('status',['SELESAI','SUDAH BAYAR'])->whereMonth('created_at',Illuminate\Support\Carbon::now()->month)->sum('total_harga')) }}</h6>
                     </div>
                   </div>
                 </div>
@@ -113,6 +112,7 @@
                     <thead>
                         <tr>
                             <th scope="col" class="no">No</th>
+                            <th scope="col">Kode Transaksi</th>
                             <th scope="col">Nama Customer</th>
                             <th scope="col">Tour Guide</th>
                             <th scope="col">Paket Travel</th>
@@ -125,6 +125,7 @@
                         @foreach ($transaksi as $item)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
+                                <td>{{ $item->kode_transaksi }}</td>
                                 <td>{{ $item->user->name }}</td>
                                 <td>{{ $item->tourGuide->name ?? 'Belum Ada' }}</td>
                                 <td>{{ $item->travel->paketTravel->nama_paket }}</td>
@@ -176,6 +177,7 @@
                       <thead>
                           <tr>
                                 <th scope="col" class="no">No</th>
+                                <th scope="col">Kode Transaksi</th>
                                 <th scope="col">Nama Customer</th>
                                 <th scope="col">Paket Travel</th>
                                 <th scope="col">Bukti Perjalanan</th>
@@ -184,9 +186,10 @@
                           </tr>
                       </thead>
                       <tbody>
-                          @foreach (App\Transaksi::where('status','SELESAI')->get() as $item)
+                          @foreach (App\Transaksi::where('status','SELESAI')->orderBy('created_at','DESC')->get() as $item)
                               <tr>
                                   <th scope="row">{{ $loop->iteration }}</th>
+                                  <td>{{ $item->kode_transaksi }}</td>
                                   <td>{{ $item->user->name }}</td>
                                   <td>{{ $item->travel->paketTravel->nama_paket }}</td>
                                   <td>

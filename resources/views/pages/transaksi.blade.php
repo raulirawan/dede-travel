@@ -58,6 +58,9 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('transaksi.detail', $item->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                                        @if ($item->status == 'PENDING')
+                                        <a href="{{ url($item->link_pembayaran ?? '') }}" target="_blank" class="btn btn-success btn-sm">Bayar</a>
+                                        @endif
                                         @if ($item->review_id == null && $item->status == 'SELESAI')
                                         <button
                                         id="tulis-review-btn"
