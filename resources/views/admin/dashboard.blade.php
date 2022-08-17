@@ -100,6 +100,7 @@
               </div>
 
             </div><!-- End Customers Card -->
+            @if (Auth::user()->roles == 'ADMIN')
 
             <!-- Reports -->
             <div class="col-12">
@@ -229,7 +230,8 @@
                   </div>
 
                 </div>
-              </div><!-- End Reports -->
+            </div><!-- End Reports -->
+            @endif
 
           </div>
         </div><!-- End Left side columns -->

@@ -77,6 +77,20 @@
       </li><!-- End Tables Nav -->
 
       --}}
+      @elseif(Auth::user()->roles == 'PIMPINAN')
+      <li class="nav-item">
+        <a class="nav-link " href="{{ route('admin.dashboard.index') }}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.transaksi.index') }}">
+          <i class="bi bi-receipt"></i>
+          <span>Data Transaksi</span>
+        </a>
+      </li>
       @else
       <li class="nav-item">
         <a class="nav-link " href="{{ route('tour.guide.dashboard.index') }}">

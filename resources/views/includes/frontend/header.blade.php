@@ -17,6 +17,9 @@
                                     <ul id="navigation">
                                         <li><a class="active" href="{{ url('/') }}">home</a></li>
                                         <li><a class="" href="{{ url('/paket-travel') }}">Paket Travel</a></li>
+                                        <li><a class="" href="https://wa.me/6287877908416" target="_blank">Whatsapp</a></li>
+                                        <li><a class="d-lg-none" href="{{ route('login') }}">Masuk</a></li>
+                                        <li><a class="d-lg-none" href="{{ route('register') }}">Daftar</a></li>
                                         @auth
                                             <li><a href="#">Halo, {{ Auth::user()->name }}<i
                                                         class="ti-angle-down"></i></a>
