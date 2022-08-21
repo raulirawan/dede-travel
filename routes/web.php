@@ -18,6 +18,16 @@ Route::get('/clear-cache', function () {
     Artisan::call('view:clear');
     return 'cache cleared';
 });
+Route::get('/maintenance-down', function () {
+    Artisan::call('down');
+    return 'maintenance down';
+});
+
+
+Route::get('/maintenance-up', function () {
+    Artisan::call('up');
+    return 'maintenance up';
+});
 Route::get('/', function () {
     return view('home');
 });
