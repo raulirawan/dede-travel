@@ -1,7 +1,8 @@
 @extends('layouts.frontend')
 
 @section('content')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- bradcam_area  -->
     <div class="bradcam_area bradcam_bg_2">
         <div class="container">
@@ -71,7 +72,8 @@
                                 </div>
                                 <button id="buat-pesanan-tiket" class="btn btn-primary btn-sm btn-block mt-4">
                                     <span id="text-button">Buat Transaksi Tiket</span>
-                                    <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span id="spinner" class="d-none spinner-border spinner-border-sm" role="status"
+                                        aria-hidden="true"></span>
                                 </button>
                             </form>
                         </div>
@@ -205,7 +207,7 @@
             });
 
             $(document).on('click', '.btn-delete', function() {
-                if(confirm("Yakin Ingin Di Hapus ?")) {
+                if (confirm("Yakin Ingin Di Hapus ?")) {
                     $(this).closest('#tr').remove();
                     var init_total_harga = parseInt($("#total_harga").text());
                     var harga = parseInt($("#harga").val());
@@ -216,7 +218,7 @@
             });
 
             $(document).on('click', '#buat-pesanan-tiket', function() {
-                if(confirm("Yakin Buat Pesanan")) {
+                if (confirm("Yakin Buat Pesanan")) {
                     var data_peserta = $("tbody tr", $("#data_peserta")).map(function() {
                         return [$("td", this).map(function() {
                             return this.innerHTML;
@@ -226,7 +228,7 @@
                     var total_harga = parseInt($("#total_harga").text());
 
 
-                    if(data_peserta == '' ){
+                    if (data_peserta == '') {
                         alert('Peserta Tidak Boleh Kosong!');
                         return false;
                     }
@@ -243,7 +245,7 @@
                             _token: $('meta[name="csrf-token"]').attr('content'),
                         },
 
-                        success: function (response) {
+                        success: function(response) {
                             if (response.status == 'success') {
                                 alert(response.message);
                                 window.location.replace(response.url);

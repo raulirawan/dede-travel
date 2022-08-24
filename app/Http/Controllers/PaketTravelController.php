@@ -34,7 +34,7 @@ class PaketTravelController extends Controller
         Config::$isSanitized = config('services.midtrans.isSanitized');
         Config::$is3ds = config('services.midtrans.is3ds');
 
-        $kode_transaksi = 'DT-'.mt_rand(00000,99999);
+        $kode_transaksi = 'DT-' . mt_rand(00000, 99999);
         $peserta = $request->data_peserta;
         // data_peserta
         if ($peserta != null) {
@@ -46,13 +46,20 @@ class PaketTravelController extends Controller
                 $data_peserta[] = [
                     'nama_peserta' => $value[0],
                     'nomor_handphone' => $value[1],
-                    'kode_tiket' =>$kode_tiket,
+                    'kode_tiket' => $kode_tiket,
                 ];
             }
 
             $data_peserta = json_encode($data_peserta);
         }
-
+        $travel = Travel::where('id', $request->travel_id)->first();
+        if ($junlah_peserta > $travel->kuota) {
+            return response()->json([
+                'message' => 'Kuota Melebihi Batas, Silahkan Coba Lagi!',
+                'status'  => 'gagal',
+                'url' => route('form.pemesanan.travel.index', $request->travel_id),
+            ]);
+        }
         $transaksi = new Transaksi();
         $transaksi->user_id = Auth::user()->id;
         $transaksi->travel_id = $request->travel_id;
@@ -74,9 +81,9 @@ class PaketTravelController extends Controller
                 'email' => Auth::user()->email,
             ],
             'callbacks' => [
-                'finish' => 'https://dedetravel.my.id/transaksi',
+                'finish' => url('transaksi'),
             ],
-            'enable_payments' => ['bca_va','permata_va','bni_va','bri_va','gopay'],
+            'enable_payments' => ['bca_va', 'permata_va', 'bni_va', 'bri_va', 'gopay'],
             'vtweb' => [],
         ];
 
@@ -87,7 +94,7 @@ class PaketTravelController extends Controller
             $transaksi->link_pembayaran = $paymentUrl;
             $transaksi->save();
 
-            if($transaksi != null) {
+            if ($transaksi != null) {
                 // kirim email
                 return response()->json([
                     'message' => 'Data Transaksi Berhasil di Buat',
@@ -98,7 +105,7 @@ class PaketTravelController extends Controller
                 return response()->json([
                     'message' => 'Data Transaksi Gagal di Buat, Coba Lagi Ya',
                     'status'  => 'gagal',
-                    'url' => route('form.pemesanan.travel.index'),
+                    'url' => route('form.pemesanan.travel.index', $request->travel_id),
                 ]);
             }
             //reditect halaman midtrans
@@ -107,7 +114,7 @@ class PaketTravelController extends Controller
             return response()->json([
                 'message' => 'Data Transaksi Gagal di Buat, Coba Lagi Ya',
                 'status'  => 'gagal',
-                'url' => route('form.pemesanan.travel.index'),
+                'url' => route('form.pemesanan.travel.index', $request->travel_id),
             ]);
         }
     }
