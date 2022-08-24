@@ -70,4 +70,36 @@
             </div>
         </div>
     </div>
+    <!-- testimonial_area  -->
+    <div class="testimonial_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="testmonial_active owl-carousel">
+
+                        @forelse ($review as $item)
+                            <div class="single_carousel">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <div class="single_testmonial text-center">
+                                            <div class="author_thumb">
+                                                <img src="{{ asset('frontend') }}/img/testmonial/author.png" alt="">
+                                            </div>
+                                            <p>{{ $item->review }}</p>
+                                            <div class="testmonial_author">
+                                                <h3></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                        @endforelse
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /testimonial_area  -->
 @endsection

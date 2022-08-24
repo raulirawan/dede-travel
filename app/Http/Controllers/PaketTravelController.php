@@ -11,14 +11,18 @@ use Midtrans\Config;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Review;
 use Illuminate\Support\Facades\Auth;
 
 class PaketTravelController extends Controller
 {
     public function index($id)
     {
+        $review = Review::with(['travel.paketTravel'])->whereHas('travel.paketTravel', function ($item) use ($id) {
+            $item->where('id', $id);
+        })->get();
         $paketTravel = PaketTravel::findOrFail($id);
-        return view('pages.paket-travel', compact('paketTravel'));
+        return view('pages.paket-travel', compact('paketTravel','review'));
     }
 
     public function formTravel($id)

@@ -4,14 +4,15 @@
 
 @section('content')
 
-<style>
-    .datatable .aksi {
-        width: 20%;
-    }
-    .datatable .no {
-        width: 5%;
-    }
-</style>
+    <style>
+        .datatable .aksi {
+            width: 20%;
+        }
+
+        .datatable .no {
+            width: 5%;
+        }
+    </style>
     <main id="main" class="main">
 
         <div class="pagetitle">
@@ -52,19 +53,28 @@
                                             <td>
                                                 <img src="{{ asset($item->gambar) }}" style="width: 100px">
                                             </td>
-                                            <td>20 Review</td>
                                             <td>
-                                                <a href="{{ route('admin.travel.index', $item->id) }}" class="btn btn-success btn-sm">Jadwal</a>
-                                                <button
-                                                id="edit"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modal-edit"
-                                                class="btn btn-info btn-sm"
-                                                data-id="{{ $item->id }}"
-                                                data-nama_paket="{{ $item->nama_paket }}"
-                                                data-gambar="{{ $item->gambar }}"
-                                                >Edit</button>
-                                                <a href="{{ route('admin.paket-travel.delete', $item->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ?')">Hapus</a>
+                                                @php
+                                                    $id = $item->id;
+                                                    $review = App\Review::with(['travel.paketTravel'])
+                                                        ->whereHas('travel.paketTravel', function ($data) use ($id) {
+                                                            $data->where('id', $id);
+                                                        })
+                                                        ->count();
+
+                                                @endphp
+                                                {{ $review }} Review
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.travel.index', $item->id) }}"
+                                                    class="btn btn-success btn-sm">Jadwal</a>
+                                                <button id="edit" data-bs-toggle="modal" data-bs-target="#modal-edit"
+                                                    class="btn btn-info btn-sm" data-id="{{ $item->id }}"
+                                                    data-nama_paket="{{ $item->nama_paket }}"
+                                                    data-gambar="{{ $item->gambar }}">Edit</button>
+                                                <a href="{{ route('admin.paket-travel.delete', $item->id) }}"
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Yakin ?')">Hapus</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -100,19 +110,18 @@
                             </div>
                             <div class="form-group mb-2">
                                 <label class="form-label">Gambar</label>
-                                <input type="file" class="form-control"
-                                    name="gambar" required>
+                                <input type="file" class="form-control" name="gambar" required>
                             </div>
                         </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Simpan Data</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Simpan Data</button>
+                        </div>
+                    </form>
                 </div>
-                </form>
-            </div>
 
+            </div>
         </div>
-    </div>
     </div>
 
 
@@ -132,54 +141,54 @@
                                 <input type="text" class="form-control" id="nama_paket" value="{{ old('nama_paket') }}"
                                     name="nama_paket" placeholder="Masukan Nama Paket" required>
                             </div>
-                               <div class="form-group mb-2">
+                            <div class="form-group mb-2">
                                 <label class="form-label">Gambar</label>
-                                <input type="file" class="form-control mb-2"
-                                    name="gambar" required>
-                                <img src="#"  id="gambar" style="width: 100px">
+                                <input type="file" class="form-control mb-2" name="gambar" required>
+                                <img src="#" id="gambar" style="width: 100px">
                             </div>
                         </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Simpan Data</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Simpan Data</button>
+                        </div>
+                    </form>
                 </div>
-                </form>
-            </div>
 
+            </div>
         </div>
-    </div>
     </div>
 
 
 @endsection
 
 @push('down-script')
-@if ($errors->has('email'))
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#modal-create').modal('show');
-    });
-</script>
-@endif
-@if ($errors->has('email_edit'))
-<script type="text/javascript">
-   $(document).ready(function() {
-        $('#modal-edit').modal('show');
-    });
-</script>
-@endif
+    @if ($errors->has('email'))
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#modal-create').modal('show');
+            });
+        </script>
+    @endif
+    @if ($errors->has('email_edit'))
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#modal-edit').modal('show');
+            });
+        </script>
+    @endif
 
-<script>
-    $(document).ready(function() {
-        $(document).on('click', '#edit', function() {
-            var id = $(this).data('id');
-            var nama_paket = $(this).data('nama_paket');
-            var gambar = $(this).data('gambar');
-            var url = "{{ url('/') }}";
-            $('#nama_paket').val(nama_paket);
-            $('#form-edit').attr('action', '/admin/paket-travel/update/' + id);
-            $('#gambar').attr('src', url + '/' +gambar);
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '#edit', function() {
+                var id = $(this).data('id');
+                var nama_paket = $(this).data('nama_paket');
+                var gambar = $(this).data('gambar');
+                var url = "{{ url('/') }}";
+                $('#nama_paket').val(nama_paket);
+                $('#form-edit').attr('action', '/admin/paket-travel/update/' + id);
+                $('#gambar').attr('src', url + '/' + gambar);
+            });
         });
-    });
-</script>
+    </script>
 @endpush
